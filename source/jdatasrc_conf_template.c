@@ -1,15 +1,19 @@
-
-  @verbatim
+/**
   ******************************************************************************
-  *  
-  *           Portions COPYRIGHT 2016 STMicroelectronics                       
-  *           Portions Copyright (C) 1994-2011, Thomas G. Lane, Guido Vollbeding          
-  *  
-  * @file    st_readme.txt 
+  * @file    jdatasrc_conf_template.c 
   * @author  MCD Application Team
-  * @brief   This file lists the main modification done by STMicroelectronics on
-  *          LibJPEG for integration with STM32Cube solution.  
+  * @date    23-September-2016
+  * @brief   This file implements LibJPEG read/write functions.
+  *          This file should be copied to the application folder and modified 
+  *          as follows:
+  *            - Rename it to 'jdatasrc_conf.c'.
+  *            - Implement read/write functions (example of implementation is 
+  *              provided based on FatFs)
   ******************************************************************************
+  * @attention
+  *
+  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics International N.V. 
+  * All rights reserved.</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without 
   * modification, are permitted, provided that the following conditions are met:
@@ -43,31 +47,43 @@
   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
   ******************************************************************************
-  @endverbatim
+  */
 
-### 23-September-2016 ###
-========================
-   + Remove from LibJpeg all the links with FatFs
-   + Add template files for read/write operations 'jdatasrc_conf_template.c/.h', these
-     files have to be copied to the application folder and modified as follows:
-            - Rename them to 'jdatasrc_conf.c/.h'
-            - Implement read/write functions (example of implementation is provided based on FatFs)
+/* Includes ------------------------------------------------------------------*/
+#include "jdatasrc_conf_template.h"
 
-### 23-December-2014 ###
-========================
-   + jinclude.h: add newline at end of file to fix compilation warning.
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+/* Private function prototypes -----------------------------------------------*/
+/* Private functions ---------------------------------------------------------*/
 
-
-### 19-June-2014 ###
-====================
-   + First customized version of LibJPEG V8d for STM32Cube solution.
-   + LibJPEG is preconfigured to support by default the FatFs file system when
-     media are processed from a FAT format media
-   + The original “jmorecfg.h” and “jconfig.h” files was renamed into “jmorecfg_template.h”
-     and “jconfig_template.h”, respectively. Two macros has been added to specify the memory
-     allocation/Freeing methods.
-     These two last files need to be copied to the application folder and customized
-     depending on the application requirements.
-
- * <h3><center>&copy; COPYRIGHT STMicroelectronics</center></h3>
+/*
+ * The modules that use fread() and fwrite() always invoke them through
+ * these macros.  On some systems you may need to twiddle the argument casts.
+ * CAUTION: argument order is different from underlying functions!
  */
+
+ 
+size_t read_file (FIL  *file, uint8_t *buf, uint32_t sizeofbuf)
+{
+/*  Example of implementation based on FatFS
+
+    static size_t BytesReadfile ;  
+    f_read (file, buf , sizeofbuf, &BytesReadfile); 
+    return BytesReadfile;    
+*/
+}
+
+size_t write_file (FIL  *file, uint8_t *buf, uint32_t sizeofbuf)
+{
+/*  Example of implementation based on FatFS
+
+   static size_t BytesWritefile ;  
+   f_write (file, buf , sizeofbuf, &BytesWritefile); 
+   return BytesWritefile; 
+*/   
+}
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

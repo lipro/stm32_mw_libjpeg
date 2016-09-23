@@ -1,15 +1,19 @@
-
-  @verbatim
+/**
   ******************************************************************************
-  *  
-  *           Portions COPYRIGHT 2016 STMicroelectronics                       
-  *           Portions Copyright (C) 1994-2011, Thomas G. Lane, Guido Vollbeding          
-  *  
-  * @file    st_readme.txt 
+  * @file    jdatasrc_conf_template.h 
   * @author  MCD Application Team
-  * @brief   This file lists the main modification done by STMicroelectronics on
-  *          LibJPEG for integration with STM32Cube solution.  
+  * @date    23-September-2016
+  * @brief   Header for jdatasrc_conf_template.c module.
+    *          This file should be copied to the application folder and modified 
+  *          as follows:
+  *            - Rename it to 'jdatasrc_conf.c'.
+  *            - Implement read/write functions (example of implementation is 
+  *              provided based on FatFs)
   ******************************************************************************
+  * @attention
+  *
+  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics International N.V. 
+  * All rights reserved.</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without 
   * modification, are permitted, provided that the following conditions are met:
@@ -43,31 +47,42 @@
   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
   ******************************************************************************
-  @endverbatim
+  */
 
-### 23-September-2016 ###
-========================
-   + Remove from LibJpeg all the links with FatFs
-   + Add template files for read/write operations 'jdatasrc_conf_template.c/.h', these
-     files have to be copied to the application folder and modified as follows:
-            - Rename them to 'jdatasrc_conf.c/.h'
-            - Implement read/write functions (example of implementation is provided based on FatFs)
+/* Includes ------------------------------------------------------------------*/
+#include "ff.h"
 
-### 23-December-2014 ###
-========================
-   + jinclude.h: add newline at end of file to fix compilation warning.
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+/* Private function prototypes -----------------------------------------------*/
+/* Private functions ---------------------------------------------------------*/
+
+/*
+  Example of implementation based on FatFS
+  
+  If JFREAD/JFWRITE prototypes are complient with the standard FatFS APIs (f_read/f_write) 
+  only APIs re-definition is needed and no need to wrapper APIs defined in "jdatasrc_conf_template.c" file
+
+   #define JFREAD  f_read
+   #define JFWRITE f_write
+
+*/
 
 
-### 19-June-2014 ###
-====================
-   + First customized version of LibJPEG V8d for STM32Cube solution.
-   + LibJPEG is preconfigured to support by default the FatFs file system when
-     media are processed from a FAT format media
-   + The original “jmorecfg.h” and “jconfig.h” files was renamed into “jmorecfg_template.h”
-     and “jconfig_template.h”, respectively. Two macros has been added to specify the memory
-     allocation/Freeing methods.
-     These two last files need to be copied to the application folder and customized
-     depending on the application requirements.
+#define FILE            FIL
 
- * <h3><center>&copy; COPYRIGHT STMicroelectronics</center></h3>
- */
+#define JMALLOC   malloc    
+#define JFREE     free  
+
+size_t read_file (FIL  *file, uint8_t *buf, uint32_t sizeofbuf);
+size_t write_file (FIL  *file, uint8_t *buf, uint32_t sizeofbuf) ;
+
+#define JFREAD(file,buf,sizeofbuf)  \
+   read_file (file,buf,sizeofbuf)
+
+#define JFWRITE(file,buf,sizeofbuf)  \
+   write_file (file,buf,sizeofbuf)
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

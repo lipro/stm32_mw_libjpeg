@@ -80,32 +80,3 @@
  */
 
 #define SIZEOF(object)	((size_t) sizeof(object))
-
-   
-/*
- * The modules that use fread() and fwrite() always invoke them through
- * these macros.  On some systems you may need to twiddle the argument casts.
- * CAUTION: argument order is different from underlying functions!
- */
-
-#define FILE            FIL
-
-static __INLINE size_t read_file (FIL  *file, uint8_t *buf, uint32_t sizeofbuf)
-{
-  static size_t BytesReadfile ;  
-  f_read (file, buf , sizeofbuf, &BytesReadfile); 
-  return BytesReadfile; 
-}
-
-static __INLINE size_t write_file (FIL  *file, uint8_t *buf, uint32_t sizeofbuf)
-{
-  static size_t BytesWritefile ;  
-  f_write (file, buf , sizeofbuf, &BytesWritefile); 
-  return BytesWritefile; 
-}
-
-#define JFREAD(file,buf,sizeofbuf)  \
-   read_file (file,buf,sizeofbuf)
-
-#define JFWRITE(file,buf,sizeofbuf)  \
-   write_file (file,buf,sizeofbuf)
