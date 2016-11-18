@@ -29,7 +29,7 @@
  * pull in <sys/types.h> as well.
  * Note that the core JPEG library does not require <stdio.h>;
  * only the default error handler and data source/destination modules do.
- * But we must pull it in because of the references to FILE in jpeglib.h.
+ * But we must pull it in because of the references to JFILE in jpeglib.h.
  * You can remove those references if you want to compile without <stdio.h>.
  */
 

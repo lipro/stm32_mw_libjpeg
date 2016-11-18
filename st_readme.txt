@@ -44,6 +44,11 @@
   *
   ******************************************************************************
   @endverbatim
+### 18-November-2016 ###
+========================
+   + Remove from LibJpeg all the links with FatFs
+   + rename template files for read/write operations from 'jdatasrc_conf_template.c/.h'
+   to 'jdata_conf_template.c/.h' .
 
 ### 23-September-2016 ###
 ========================

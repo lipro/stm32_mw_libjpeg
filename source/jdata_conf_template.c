@@ -1,12 +1,12 @@
 /**
   ******************************************************************************
-  * @file    jdatasrc_conf_template.h 
+  * @file    jdata_conf_template.c 
   * @author  MCD Application Team
-  * @date    23-September-2016
-  * @brief   Header for jdatasrc_conf_template.c module.
-    *          This file should be copied to the application folder and modified 
+  * @date    18-November-2016
+  * @brief   This file implements LibJPEG read/write functions.
+  *          This file should be copied to the application folder and modified 
   *          as follows:
-  *            - Rename it to 'jdatasrc_conf.c'.
+  *            - Rename it to 'jdata_conf.c'.
   *            - Implement read/write functions (example of implementation is 
   *              provided based on FatFs)
   ******************************************************************************
@@ -50,7 +50,7 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "ff.h"
+#include "jdata_conf_template.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -60,29 +60,30 @@
 /* Private functions ---------------------------------------------------------*/
 
 /*
-  Example of implementation based on FatFS
-  
-  If JFREAD/JFWRITE prototypes are complient with the standard FatFS APIs (f_read/f_write) 
-  only APIs re-definition is needed and no need to wrapper APIs defined in "jdatasrc_conf_template.c" file
+ * The modules that use fread() and fwrite() always invoke them through
+ * these macros.  On some systems you may need to twiddle the argument casts.
+ * CAUTION: argument order is different from underlying functions!
+ */
 
-   #define JFREAD  f_read
-   #define JFWRITE f_write
+ 
+size_t read_file (JFILE  *file, uint8_t *buf, uint32_t sizeofbuf)
+{
+/*  Example of implementation based on FatFS
 
+    static size_t BytesReadfile ;  
+    f_read (file, buf , sizeofbuf, &BytesReadfile); 
+    return BytesReadfile;    
 */
+}
 
+size_t write_file (JFILE  *file, uint8_t *buf, uint32_t sizeofbuf)
+{
+/*  Example of implementation based on FatFS
 
-#define FILE            FIL
-
-#define JMALLOC   malloc    
-#define JFREE     free  
-
-size_t read_file (FIL  *file, uint8_t *buf, uint32_t sizeofbuf);
-size_t write_file (FIL  *file, uint8_t *buf, uint32_t sizeofbuf) ;
-
-#define JFREAD(file,buf,sizeofbuf)  \
-   read_file (file,buf,sizeofbuf)
-
-#define JFWRITE(file,buf,sizeofbuf)  \
-   write_file (file,buf,sizeofbuf)
+   static size_t BytesWritefile ;  
+   f_write (file, buf , sizeofbuf, &BytesWritefile); 
+   return BytesWritefile; 
+*/   
+}
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
